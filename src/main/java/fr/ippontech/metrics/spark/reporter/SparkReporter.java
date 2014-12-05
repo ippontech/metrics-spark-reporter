@@ -19,7 +19,7 @@ public class SparkReporter extends ScheduledReporter {
     private static final Logger LOGGER = LoggerFactory.getLogger(SparkReporter.class);
 
     private String sparkHost;
-    private Integer sparkPort;
+    private int sparkPort;
     private Socket socket;
     private ObjectMapper mapper;
     private PrintWriter writer;
@@ -28,7 +28,7 @@ public class SparkReporter extends ScheduledReporter {
         return new Builder(registry);
     }
 
-    private SparkReporter(MetricRegistry registry, String sparkHost, Integer sparkPort, TimeUnit rateUnit,
+    private SparkReporter(MetricRegistry registry, String sparkHost, int sparkPort, TimeUnit rateUnit,
                           TimeUnit durationUnit, MetricFilter filter) {
         super(registry, "spark-reporter", filter, rateUnit, durationUnit);
         this.sparkHost = sparkHost;
@@ -42,70 +42,80 @@ public class SparkReporter extends ScheduledReporter {
                        SortedMap<String, Histogram> histograms,
                        SortedMap<String, Meter> meters,
                        SortedMap<String, Timer> timers) {
-
         try {
             connect();
-
-            if (gauges.isEmpty() && counters.isEmpty() && histograms.isEmpty() &&
-                meters.isEmpty() && timers.isEmpty()) {
-                return;
+            doReport(gauges, counters, histograms, meters, timers);
+        } catch (IOException ioe1) {
+            try {
+                connect();
+                doReport(gauges, counters, histograms, meters, timers);
+            } catch (IOException ioe2) {
+                LOGGER.warn("Unable to report to Spark : "+ ioe2.getClass().getCanonicalName());
             }
+        }
+    }
 
-            if (!gauges.isEmpty()) {
-                for (Map.Entry<String, Gauge> entry : gauges.entrySet()) {
-                    reportGauge(entry.getKey(), entry.getValue());
-                }
-            }
+    private void doReport(SortedMap<String, Gauge> gauges,
+                          SortedMap<String, Counter> counters,
+                          SortedMap<String, Histogram> histograms,
+                          SortedMap<String, Meter> meters,
+                          SortedMap<String, Timer> timers) throws IOException {
 
-            if (!counters.isEmpty()) {
-                for (Map.Entry<String, Counter> entry : counters.entrySet()) {
-                    reportCounter(entry.getKey(), entry.getValue());
-                }
-            }
+        if (gauges.isEmpty() && counters.isEmpty() && histograms.isEmpty() &&
+            meters.isEmpty() && timers.isEmpty()) {
+            return;
+        }
 
-            if (!histograms.isEmpty()) {
-                for (Map.Entry<String, Histogram> entry : histograms.entrySet()) {
-                    reportHistogram(entry.getKey(), entry.getValue());
-                }
+        if (!gauges.isEmpty()) {
+            for (Map.Entry<String, Gauge> entry : gauges.entrySet()) {
+                reportGauge(entry.getKey(), entry.getValue());
             }
+        }
 
-            if (!meters.isEmpty()) {
-                for (Map.Entry<String, Meter> entry : meters.entrySet()) {
-                    reportMetered(entry.getKey(), entry.getValue());
-                }
+        if (!counters.isEmpty()) {
+            for (Map.Entry<String, Counter> entry : counters.entrySet()) {
+                reportCounter(entry.getKey(), entry.getValue());
             }
+        }
 
-            if (!timers.isEmpty()) {
-                for (Map.Entry<String, Timer> entry : timers.entrySet()) {
-                    reportTimer(entry.getKey(), entry.getValue());
-                }
+        if (!histograms.isEmpty()) {
+            for (Map.Entry<String, Histogram> entry : histograms.entrySet()) {
+                reportHistogram(entry.getKey(), entry.getValue());
             }
-        } catch (IOException ioe) {
-            LOGGER.warn("Unable to report to Spark ", ioe);
+        }
+
+        if (!meters.isEmpty()) {
+            for (Map.Entry<String, Meter> entry : meters.entrySet()) {
+                reportMetered(entry.getKey(), entry.getValue());
+            }
+        }
+
+        if (!timers.isEmpty()) {
+            for (Map.Entry<String, Timer> entry : timers.entrySet()) {
+                reportTimer(entry.getKey(), entry.getValue());
+            }
         }
     }
 
     private void connect() throws IOException {
+        if (writer != null && writer.checkError()) {
+            closeConnection();
+        }
         if (socket == null) {
             socket = SocketFactory.getDefault().createSocket(sparkHost, sparkPort);
             writer = new PrintWriter(socket.getOutputStream());
         }
     }
 
-    private void closeConnection() {
-        try {
-            writer.close();
-            socket.close();
-        } catch (IOException ioe) {
-            LOGGER.error("Could not disconnect from Spark", ioe);
-        } finally {
-            writer = null;
-            socket = null;
-        }
+    private void closeConnection() throws IOException {
+        writer.close();
+        socket.close();
+        writer = null;
+        socket = null;
     }
 
     private void reportGauge(String name, Gauge gauge) throws IOException {
-        if (this.isANumber(gauge.getValue()) == true) {
+        if (this.isANumber(gauge.getValue())) {
             writer.println(mapper.writeValueAsString(new GaugeMeasure(name, gauge)));
         }
     }
@@ -126,7 +136,7 @@ public class SparkReporter extends ScheduledReporter {
         writer.println(mapper.writeValueAsString(new TimerMeasure(name, timer)));
     }
 
-    private Boolean isANumber(Object object) {
+    private boolean isANumber(Object object) {
         if (object instanceof Float || object instanceof  Double ||
             object instanceof Integer || object instanceof Long) {
             return true;
@@ -164,7 +174,7 @@ public class SparkReporter extends ScheduledReporter {
             return this;
         }
 
-        public SparkReporter build(String sparkHost, Integer sparkPort) {
+        public SparkReporter build(String sparkHost, int sparkPort) {
             return new SparkReporter(registry, sparkHost, sparkPort, rateUnit, durationUnit, filter);
         }
     }

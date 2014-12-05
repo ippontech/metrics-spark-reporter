@@ -38,7 +38,7 @@ sparkReporter.start(10, TimeUnit.SECONDS);
 
 ## Test
 
-Test sending data with a [JHipster] sample (http://jhipster.github.io/) modified to report 
+Test sending data with a [JHipster] (http://jhipster.github.io/) sample modified to report 
 to a Spark Streaming app [metrics-spark-receiver] (https://github.com/ippontech/metrics-spark-receiver).
 
 Run the Jhipster app with the Maven command :
