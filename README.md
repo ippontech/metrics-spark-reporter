@@ -38,12 +38,15 @@ sparkReporter.start(10, TimeUnit.SECONDS);
 
 ## Test
 
-Test sending data with a [JHipster] (http://jhipster.github.io/) sample modified to report 
-to a Spark Streaming app [metrics-spark-receiver] (https://github.com/ippontech/metrics-spark-receiver).
+Test sending data with the [JHipster] (http://jhipster.github.io/) sample which report 
+to a Spark Streaming app implementing 
+the java custom receiver [metrics-spark-receiver] (https://github.com/ippontech/metrics-spark-receiver).
 
-Run the Jhipster app with the Maven command :
-
+Send data by launching the JHipster sample with the Maven command :
 ```
 $ mvn spring-boot:run
 ```
-And launch the class `MetricsToConsole` to display the metrics received in Spark.
+
+Display metrics received by launching one of the two classes inside the repo `metrics-spark-receiver` :
+* `MetricsToConsole` to display data in the console.
+* `MetricsToES` to send data to an ElasticSearch server via Spark in order to use Kibana.
