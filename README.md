@@ -3,9 +3,9 @@ metrics-spark-reporter
 
 ## Dropwizard Metrics reporter for Apache Spark Streaming
 
-This is a reporter for the [Metrics library] (https://dropwizard.github.io/metrics/3.1.0/) 
+This is a reporter for the [Metrics library] (https://dropwizard.github.io/metrics/3.1.0/)
 of [DropWizard] (http://dropwizard.io/),
-similar to the [graphite] (https://dropwizard.github.io/metrics/3.1.0/manual/graphite/#manual-graphite) 
+similar to the [graphite] (https://dropwizard.github.io/metrics/3.1.0/manual/graphite/#manual-graphite)
 or [ganglia] (https://dropwizard.github.io/metrics/3.1.0/manual/ganglia/#manual-ganglia) reporters,
 except that it reports to metrics-spark-receiver.
 
@@ -38,8 +38,8 @@ sparkReporter.start(10, TimeUnit.SECONDS);
 
 ## Test
 
-Test sending data with the [JHipster] (http://jhipster.github.io/) sample which report 
-to a Spark Streaming app implementing 
+Test sending data with the [JHipster] (http://jhipster.github.io/) sample which report
+to a Spark Streaming app implementing
 the java custom receiver [metrics-spark-receiver] (https://github.com/ippontech/metrics-spark-receiver).
 
 Send data by launching the JHipster sample with the Maven command :
