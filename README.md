@@ -38,15 +38,23 @@ sparkReporter.start(10, TimeUnit.SECONDS);
 
 ## Test
 
+There is two ways to test this Reporter :
+
+* With a sample [spark-jhipster] (https://github.com/ahars/spark-jhipster)
+* With Docker (in sample/).
+
+
 Test sending data with the [JHipster] (http://jhipster.github.io/) sample which report
 to a Spark Streaming app implementing
-the java custom receiver [metrics-spark-receiver] (https://github.com/ippontech/metrics-spark-receiver).
+the java custom receiver [spark-jhipster] (https://github.com/ahars/spark-jhipster).
 
 Send data by launching the JHipster sample with the Maven command :
 ```
 $ mvn spring-boot:run
 ```
 
-Display metrics received by launching one of the two classes inside the repo `metrics-spark-receiver` :
+Display metrics received by launching one of those two classes of [metrics-spark](https://github.com/ahars/metrics-spark) :
 * `MetricsToConsole` to display data in the console.
 * `MetricsToES` to send data to an ElasticSearch server via Spark in order to use Kibana.
+
+
