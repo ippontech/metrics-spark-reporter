@@ -1,4 +1,4 @@
-package fr.ippontech.metrics.spark.reporter.measures;
+package fr.ippon.measures;
 
 import com.codahale.metrics.Gauge;
 

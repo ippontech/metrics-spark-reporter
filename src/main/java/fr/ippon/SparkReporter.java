@@ -1,8 +1,8 @@
-package fr.ippontech.metrics.spark.reporter;
+package fr.ippon;
 
 import com.codahale.metrics.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.ippontech.metrics.spark.reporter.measures.*;
+import fr.ippon.measures.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
