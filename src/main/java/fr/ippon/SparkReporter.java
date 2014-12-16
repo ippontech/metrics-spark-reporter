@@ -36,6 +36,16 @@ public class SparkReporter extends ScheduledReporter {
         this.mapper = new ObjectMapper();
     }
 
+    /**
+     * Connect the reporter to a Spark application receiver and do a reporting.
+     * Two try for each reporting and warn if the connection failed
+     *
+     * @param gauges a map of the gauges captured periodically
+     * @param counters a map of the counters captured periodically
+     * @param histograms a map of the histograms captured periodically
+     * @param meters a map of the meters captured periodically
+     * @param timers a map of the timers captured periodically
+     */
     @Override
     public void report(SortedMap<String, Gauge> gauges,
                        SortedMap<String, Counter> counters,

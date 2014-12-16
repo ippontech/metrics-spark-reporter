@@ -53,7 +53,8 @@ Send data by launching the JHipster sample with the Maven command :
 $ mvn spring-boot:run
 ```
 
-Display metrics received by launching one of those two classes of [metrics-spark](https://github.com/ahars/metrics-spark) :
+Display metrics received by launching one of those two classes
+of [metrics-spark](https://github.com/ahars/metrics-spark) :
 * `MetricsToConsole` to display data in the console.
 * `MetricsToES` to send data to an ElasticSearch server via Spark in order to use Kibana.
 

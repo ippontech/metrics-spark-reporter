@@ -10,8 +10,8 @@
     <packaging>jar</packaging>
 
     <name>Apache Spark Integration for Metrics</name>
-    <description>A reporter for Apache Spark which announces measurements to a Spark Streaming application.
-    </description>
+    <description>A reporter for Apache Spark which announces measurements
+        to a Spark Streaming application.</description>
     <url>https://github.com/ippontech/metrics-spark-reporter</url>
 
     <licenses>
