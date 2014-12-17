@@ -27,6 +27,16 @@ a measure of both the rate that a particular piece of code is called and the dis
 
 ## Configuration
 
+In order to do a Spark reporting, you need to add the dependency :
+```
+<dependency>
+	<groupId>fr.ippon</groupId>
+	<artifactId>metrics-spark-reporter</artifactId>
+	<version>1.0</version>
+</dependency>
+```
+
+And implement the SparkReporter like :
 ```
 SparkReporter sparkReporter = SparkReporter.forRegistry(metricRegistry)
 	.convertRatesTo(TimeUnit.SECONDS)
@@ -57,5 +67,3 @@ Display metrics received by launching one of those two classes
 of [metrics-spark](https://github.com/ahars/metrics-spark) :
 * `MetricsToConsole` to display data in the console.
 * `MetricsToES` to send data to an ElasticSearch server via Spark in order to use Kibana.
-
-
