@@ -1,4 +1,4 @@
-package fr.ippon.measures;
+package fr.ippon.spark.metrics.measures;
 
 import org.joda.time.DateTime;
 

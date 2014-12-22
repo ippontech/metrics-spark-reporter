@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>fr.ippon</groupId>
+    <groupId>fr.ippon.spark.metrics</groupId>
     <artifactId>metrics-spark-reporter</artifactId>
-    <version>1.1</version>
+    <version>1.2</version>
     <packaging>jar</packaging>
 
     <name>Apache Spark Integration for Metrics</name>

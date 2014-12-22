@@ -1,8 +1,8 @@
-package fr.ippon.measures;
+package fr.ippon.spark.metrics.measures;
 
-import com.codahale.metrics.Timer;
+import com.codahale.metrics.Metered;
 
-public class TimerMeasure extends SnapshotMeasure {
+public class MeterMeasure extends Measure {
 
     private Long count;
     private Double m1Rate;
@@ -10,13 +10,13 @@ public class TimerMeasure extends SnapshotMeasure {
     private Double m15Rate;
     private Double meanRate;
 
-    public TimerMeasure(String name, Timer timer) {
-        super(name, "timer", timer.getSnapshot());
-        this.count = timer.getCount();
-        this.m1Rate = timer.getOneMinuteRate();
-        this.m5Rate = timer.getFiveMinuteRate();
-        this.m15Rate = timer.getFifteenMinuteRate();
-        this.meanRate = timer.getMeanRate();
+    public MeterMeasure(String name, Metered meter) {
+        super(name, "meter");
+        this.count = meter.getCount();
+        this.m1Rate = meter.getOneMinuteRate();
+        this.m5Rate = meter.getFiveMinuteRate();
+        this.m15Rate = meter.getFifteenMinuteRate();
+        this.meanRate = meter.getMeanRate();
     }
 
     public Long getCount() {
