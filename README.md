@@ -32,7 +32,7 @@ In order to do a Spark reporting, you need to add the dependency :
 <dependency>
 	<groupId>fr.ippon.spark.metrics</groupId>
 	<artifactId>metrics-spark-reporter</artifactId>
-	<version>1.0</version>
+	<version>1.2</version>
 </dependency>
 ```
 
